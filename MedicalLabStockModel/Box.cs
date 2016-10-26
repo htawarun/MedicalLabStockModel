@@ -15,5 +15,8 @@ namespace MedicalLabStockModel
     public partial class Box
     {
         public int Id { get; set; }
+        public int LotId { get; set; }
+    
+        public virtual Lot Lot { get; set; }
     }
 }

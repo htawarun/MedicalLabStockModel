@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/25/2016 00:41:42
+-- Date Created: 10/26/2016 09:29:11
 -- Generated from EDMX file: C:\Projects\FirstRepo\MedicalLabStockSystem\MedicalLabStockModel\MedicalLabStockModel\MedicalLabStockModel.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,29 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_BoxLot]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Boxes] DROP CONSTRAINT [FK_BoxLot];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Suppliers]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Suppliers];
+GO
+IF OBJECT_ID(N'[dbo].[Lots]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Lots];
+GO
+IF OBJECT_ID(N'[dbo].[Manufacturers]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Manufacturers];
+GO
+IF OBJECT_ID(N'[dbo].[Boxes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Boxes];
+GO
+IF OBJECT_ID(N'[dbo].[ReAgents]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ReAgents];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -35,7 +53,9 @@ GO
 
 -- Creating table 'Lots'
 CREATE TABLE [dbo].[Lots] (
-    [Id] int IDENTITY(1,1) NOT NULL
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [SupplierId] int  NOT NULL,
+    [ReAgentId] int  NOT NULL
 );
 GO
 
@@ -47,13 +67,15 @@ GO
 
 -- Creating table 'Boxes'
 CREATE TABLE [dbo].[Boxes] (
-    [Id] int IDENTITY(1,1) NOT NULL
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [LotId] int  NOT NULL
 );
 GO
 
 -- Creating table 'ReAgents'
 CREATE TABLE [dbo].[ReAgents] (
-    [Id] int IDENTITY(1,1) NOT NULL
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [ManufacturerId] int  NOT NULL
 );
 GO
 
@@ -94,6 +116,66 @@ GO
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
+
+-- Creating foreign key on [LotId] in table 'Boxes'
+ALTER TABLE [dbo].[Boxes]
+ADD CONSTRAINT [FK_BoxLot]
+    FOREIGN KEY ([LotId])
+    REFERENCES [dbo].[Lots]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_BoxLot'
+CREATE INDEX [IX_FK_BoxLot]
+ON [dbo].[Boxes]
+    ([LotId]);
+GO
+
+-- Creating foreign key on [ManufacturerId] in table 'ReAgents'
+ALTER TABLE [dbo].[ReAgents]
+ADD CONSTRAINT [FK_ReAgentManufacturer]
+    FOREIGN KEY ([ManufacturerId])
+    REFERENCES [dbo].[Manufacturers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ReAgentManufacturer'
+CREATE INDEX [IX_FK_ReAgentManufacturer]
+ON [dbo].[ReAgents]
+    ([ManufacturerId]);
+GO
+
+-- Creating foreign key on [SupplierId] in table 'Lots'
+ALTER TABLE [dbo].[Lots]
+ADD CONSTRAINT [FK_SupplierLot]
+    FOREIGN KEY ([SupplierId])
+    REFERENCES [dbo].[Suppliers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_SupplierLot'
+CREATE INDEX [IX_FK_SupplierLot]
+ON [dbo].[Lots]
+    ([SupplierId]);
+GO
+
+-- Creating foreign key on [ReAgentId] in table 'Lots'
+ALTER TABLE [dbo].[Lots]
+ADD CONSTRAINT [FK_LotReAgent]
+    FOREIGN KEY ([ReAgentId])
+    REFERENCES [dbo].[ReAgents]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_LotReAgent'
+CREATE INDEX [IX_FK_LotReAgent]
+ON [dbo].[Lots]
+    ([ReAgentId]);
+GO
 
 -- --------------------------------------------------
 -- Script has ended

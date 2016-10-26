@@ -14,6 +14,19 @@ namespace MedicalLabStockModel
     
     public partial class Lot
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Lot()
+        {
+            this.Boxes = new HashSet<Box>();
+        }
+    
         public int Id { get; set; }
+        public int SupplierId { get; set; }
+        public int ReAgentId { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Box> Boxes { get; set; }
+        public virtual Supplier Supplier { get; set; }
+        public virtual ReAgent ReAgent { get; set; }
     }
 }
