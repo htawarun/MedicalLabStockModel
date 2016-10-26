@@ -23,6 +23,7 @@ namespace MedicalLabStockModel
         public int Id { get; set; }
         public int SupplierId { get; set; }
         public int ReAgentId { get; set; }
+        public System.DateTime Expiry { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Box> Boxes { get; set; }

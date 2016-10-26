@@ -146,6 +146,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Lots" Relationship="Model1.SupplierLot" FromRole="Supplier" ToRole="Lot" />
+          <Property Name="Name" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Lot">
           <Documentation>
@@ -160,6 +161,7 @@
           <Property Name="SupplierId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ReAgent" Relationship="Model1.LotReAgent" FromRole="Lot" ToRole="ReAgent" />
           <Property Name="ReAgentId" Type="Int32" Nullable="false" />
+          <Property Name="Expiry" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="None" />
         </EntityType>
         <EntityType Name="Manufacturer">
           <Documentation>
@@ -170,6 +172,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="ReAgents" Relationship="Model1.ReAgentManufacturer" FromRole="Manufacturer" ToRole="ReAgent" />
+          <Property Name="Name" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Box">
           <Documentation>
@@ -192,6 +195,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Manufacturer" Relationship="Model1.ReAgentManufacturer" FromRole="ReAgent" ToRole="Manufacturer" />
           <Property Name="ManufacturerId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
           <NavigationProperty Name="Lots" Relationship="Model1.LotReAgent" FromRole="ReAgent" ToRole="Lot" />
         </EntityType>
         <Association Name="BoxLot">

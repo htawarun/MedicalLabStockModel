@@ -79,6 +79,7 @@
     <Compile Include="ReAgent.cs">
       <DependentUpon>MedicalLabStockModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ReAgentEx.cs" />
     <Compile Include="Supplier.cs">
       <DependentUpon>MedicalLabStockModel.tt</DependentUpon>
     </Compile>
@@ -91,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="MedicalLabStockModel.edmx.diagram">
       <DependentUpon>MedicalLabStockModel.edmx</DependentUpon>
     </None>
