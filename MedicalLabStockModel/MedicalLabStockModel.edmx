@@ -4,26 +4,26 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="Model1StoreContainer">
-    <EntitySet Name="Suppliers" EntityType="Model1.Store.Suppliers" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Lots" EntityType="Model1.Store.Lots" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Manufacturers" EntityType="Model1.Store.Manufacturers" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Boxes" EntityType="Model1.Store.Boxes" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ReAgents" EntityType="Model1.Store.ReAgents" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="BoxLot" Association="Model1.Store.BoxLot">
+    <Schema Namespace="MedLab.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MedLabStoreContainer">
+    <EntitySet Name="Suppliers" EntityType="MedLab.Store.Suppliers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Lots" EntityType="MedLab.Store.Lots" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Manufacturers" EntityType="MedLab.Store.Manufacturers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Boxes" EntityType="MedLab.Store.Boxes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ReAgents" EntityType="MedLab.Store.ReAgents" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="BoxLot" Association="MedLab.Store.BoxLot">
       <End Role="Box" EntitySet="Boxes" />
       <End Role="Lot" EntitySet="Lots" />
     </AssociationSet>
-    <AssociationSet Name="ReAgentManufacturer" Association="Model1.Store.ReAgentManufacturer">
+    <AssociationSet Name="ReAgentManufacturer" Association="MedLab.Store.ReAgentManufacturer">
       <End Role="ReAgent" EntitySet="ReAgents" />
       <End Role="Manufacturer" EntitySet="Manufacturers" />
     </AssociationSet>
-    <AssociationSet Name="SupplierLot" Association="Model1.Store.SupplierLot">
+    <AssociationSet Name="SupplierLot" Association="MedLab.Store.SupplierLot">
       <End Role="Supplier" EntitySet="Suppliers" />
       <End Role="Lot" EntitySet="Lots" />
     </AssociationSet>
-    <AssociationSet Name="LotReAgent" Association="Model1.Store.LotReAgent">
+    <AssociationSet Name="LotReAgent" Association="MedLab.Store.LotReAgent">
       <End Role="Lot" EntitySet="Lots" />
       <End Role="ReAgent" EntitySet="ReAgents" />
     </AssociationSet>
@@ -33,6 +33,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Lots">
     <Key>
@@ -41,12 +42,14 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SupplierId" Type="int" Nullable="false" />
     <Property Name="ReAgentId" Type="int" Nullable="false" />
+    <Property Name="Expiry" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="Manufacturers">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Boxes">
     <Key>
@@ -61,10 +64,11 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ManufacturerId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="BoxLot">
-    <End Role="Box" Type="Model1.Store.Boxes" Multiplicity="*" />
-    <End Role="Lot" Type="Model1.Store.Lots" Multiplicity="1" />
+    <End Role="Box" Type="MedLab.Store.Boxes" Multiplicity="*" />
+    <End Role="Lot" Type="MedLab.Store.Lots" Multiplicity="1" />
     <ReferentialConstraint>
       <Principal Role="Lot">
         <PropertyRef Name="Id" />
@@ -75,8 +79,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="ReAgentManufacturer">
-    <End Role="ReAgent" Type="Model1.Store.ReAgents" Multiplicity="*" />
-    <End Role="Manufacturer" Type="Model1.Store.Manufacturers" Multiplicity="1" />
+    <End Role="ReAgent" Type="MedLab.Store.ReAgents" Multiplicity="*" />
+    <End Role="Manufacturer" Type="MedLab.Store.Manufacturers" Multiplicity="1" />
     <ReferentialConstraint>
       <Principal Role="Manufacturer">
         <PropertyRef Name="Id" />
@@ -87,8 +91,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="SupplierLot">
-    <End Role="Supplier" Type="Model1.Store.Suppliers" Multiplicity="1" />
-    <End Role="Lot" Type="Model1.Store.Lots" Multiplicity="*" />
+    <End Role="Supplier" Type="MedLab.Store.Suppliers" Multiplicity="1" />
+    <End Role="Lot" Type="MedLab.Store.Lots" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Supplier">
         <PropertyRef Name="Id" />
@@ -99,8 +103,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="LotReAgent">
-    <End Role="Lot" Type="Model1.Store.Lots" Multiplicity="*" />
-    <End Role="ReAgent" Type="Model1.Store.ReAgents" Multiplicity="1" />
+    <End Role="Lot" Type="MedLab.Store.Lots" Multiplicity="*" />
+    <End Role="ReAgent" Type="MedLab.Store.ReAgents" Multiplicity="1" />
     <ReferentialConstraint>
       <Principal Role="ReAgent">
         <PropertyRef Name="Id" />
@@ -113,26 +117,26 @@
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
-        <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Suppliers" EntityType="Model1.Supplier" />
-          <EntitySet Name="Lots" EntityType="Model1.Lot" />
-          <EntitySet Name="Manufacturers" EntityType="Model1.Manufacturer" />
-          <EntitySet Name="Boxes" EntityType="Model1.Box" />
-          <EntitySet Name="ReAgents" EntityType="Model1.ReAgent" />
-          <AssociationSet Name="BoxLot" Association="Model1.BoxLot">
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MedLab" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="MedLabEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Suppliers" EntityType="MedLab.Supplier" />
+          <EntitySet Name="Lots" EntityType="MedLab.Lot" />
+          <EntitySet Name="Manufacturers" EntityType="MedLab.Manufacturer" />
+          <EntitySet Name="Boxes" EntityType="MedLab.Box" />
+          <EntitySet Name="ReAgents" EntityType="MedLab.ReAgent" />
+          <AssociationSet Name="BoxLot" Association="MedLab.BoxLot">
             <End Role="Box" EntitySet="Boxes" />
             <End Role="Lot" EntitySet="Lots" />
           </AssociationSet>
-          <AssociationSet Name="ReAgentManufacturer" Association="Model1.ReAgentManufacturer">
+          <AssociationSet Name="ReAgentManufacturer" Association="MedLab.ReAgentManufacturer">
             <End Role="ReAgent" EntitySet="ReAgents" />
             <End Role="Manufacturer" EntitySet="Manufacturers" />
           </AssociationSet>
-          <AssociationSet Name="SupplierLot" Association="Model1.SupplierLot">
+          <AssociationSet Name="SupplierLot" Association="MedLab.SupplierLot">
             <End Role="Supplier" EntitySet="Suppliers" />
             <End Role="Lot" EntitySet="Lots" />
           </AssociationSet>
-          <AssociationSet Name="LotReAgent" Association="Model1.LotReAgent">
+          <AssociationSet Name="LotReAgent" Association="MedLab.LotReAgent">
             <End Role="Lot" EntitySet="Lots" />
             <End Role="ReAgent" EntitySet="ReAgents" />
           </AssociationSet>
@@ -145,7 +149,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Lots" Relationship="Model1.SupplierLot" FromRole="Supplier" ToRole="Lot" />
+          <NavigationProperty Name="Lots" Relationship="MedLab.SupplierLot" FromRole="Supplier" ToRole="Lot" />
           <Property Name="Name" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Lot">
@@ -156,10 +160,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Boxes" Relationship="Model1.BoxLot" FromRole="Lot" ToRole="Box" />
-          <NavigationProperty Name="Supplier" Relationship="Model1.SupplierLot" FromRole="Lot" ToRole="Supplier" />
+          <NavigationProperty Name="Boxes" Relationship="MedLab.BoxLot" FromRole="Lot" ToRole="Box" />
+          <NavigationProperty Name="Supplier" Relationship="MedLab.SupplierLot" FromRole="Lot" ToRole="Supplier" />
           <Property Name="SupplierId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ReAgent" Relationship="Model1.LotReAgent" FromRole="Lot" ToRole="ReAgent" />
+          <NavigationProperty Name="ReAgent" Relationship="MedLab.LotReAgent" FromRole="Lot" ToRole="ReAgent" />
           <Property Name="ReAgentId" Type="Int32" Nullable="false" />
           <Property Name="Expiry" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="None" />
         </EntityType>
@@ -171,7 +175,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="ReAgents" Relationship="Model1.ReAgentManufacturer" FromRole="Manufacturer" ToRole="ReAgent" />
+          <NavigationProperty Name="ReAgents" Relationship="MedLab.ReAgentManufacturer" FromRole="Manufacturer" ToRole="ReAgent" />
           <Property Name="Name" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Box">
@@ -182,7 +186,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Lot" Relationship="Model1.BoxLot" FromRole="Box" ToRole="Lot" />
+          <NavigationProperty Name="Lot" Relationship="MedLab.BoxLot" FromRole="Box" ToRole="Lot" />
           <Property Name="LotId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="ReAgent">
@@ -193,14 +197,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Manufacturer" Relationship="Model1.ReAgentManufacturer" FromRole="ReAgent" ToRole="Manufacturer" />
+          <NavigationProperty Name="Manufacturer" Relationship="MedLab.ReAgentManufacturer" FromRole="ReAgent" ToRole="Manufacturer" />
           <Property Name="ManufacturerId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" />
-          <NavigationProperty Name="Lots" Relationship="Model1.LotReAgent" FromRole="ReAgent" ToRole="Lot" />
+          <NavigationProperty Name="Lots" Relationship="MedLab.LotReAgent" FromRole="ReAgent" ToRole="Lot" />
         </EntityType>
         <Association Name="BoxLot">
-          <End Type="Model1.Box" Role="Box" Multiplicity="*" />
-          <End Type="Model1.Lot" Role="Lot" Multiplicity="1" />
+          <End Type="MedLab.Box" Role="Box" Multiplicity="*" />
+          <End Type="MedLab.Lot" Role="Lot" Multiplicity="1" />
           <ReferentialConstraint>
             <Principal Role="Lot">
               <PropertyRef Name="Id" />
@@ -211,8 +215,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="ReAgentManufacturer">
-          <End Type="Model1.ReAgent" Role="ReAgent" Multiplicity="*" />
-          <End Type="Model1.Manufacturer" Role="Manufacturer" Multiplicity="1" />
+          <End Type="MedLab.ReAgent" Role="ReAgent" Multiplicity="*" />
+          <End Type="MedLab.Manufacturer" Role="Manufacturer" Multiplicity="1" />
           <ReferentialConstraint>
             <Principal Role="Manufacturer">
               <PropertyRef Name="Id" />
@@ -223,8 +227,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="SupplierLot">
-          <End Type="Model1.Supplier" Role="Supplier" Multiplicity="1" />
-          <End Type="Model1.Lot" Role="Lot" Multiplicity="*" />
+          <End Type="MedLab.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="MedLab.Lot" Role="Lot" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Supplier">
               <PropertyRef Name="Id" />
@@ -235,8 +239,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="LotReAgent">
-          <End Type="Model1.Lot" Role="Lot" Multiplicity="*" />
-          <End Type="Model1.ReAgent" Role="ReAgent" Multiplicity="1" />
+          <End Type="MedLab.Lot" Role="Lot" Multiplicity="*" />
+          <End Type="MedLab.ReAgent" Role="ReAgent" Multiplicity="1" />
           <ReferentialConstraint>
             <Principal Role="ReAgent">
               <PropertyRef Name="Id" />
@@ -251,32 +255,35 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="Model1Container">
+  <EntityContainerMapping StorageEntityContainer="MedLabStoreContainer" CdmEntityContainer="MedLabEntities">
     <EntitySetMapping Name="Suppliers">
-      <EntityTypeMapping TypeName="IsTypeOf(Model1.Supplier)">
+      <EntityTypeMapping TypeName="IsTypeOf(MedLab.Supplier)">
         <MappingFragment StoreEntitySet="Suppliers">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Lots">
-      <EntityTypeMapping TypeName="IsTypeOf(Model1.Lot)">
+      <EntityTypeMapping TypeName="IsTypeOf(MedLab.Lot)">
         <MappingFragment StoreEntitySet="Lots">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
           <ScalarProperty Name="ReAgentId" ColumnName="ReAgentId" />
+          <ScalarProperty Name="Expiry" ColumnName="Expiry" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Manufacturers">
-      <EntityTypeMapping TypeName="IsTypeOf(Model1.Manufacturer)">
+      <EntityTypeMapping TypeName="IsTypeOf(MedLab.Manufacturer)">
         <MappingFragment StoreEntitySet="Manufacturers">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Boxes">
-      <EntityTypeMapping TypeName="IsTypeOf(Model1.Box)">
+      <EntityTypeMapping TypeName="IsTypeOf(MedLab.Box)">
         <MappingFragment StoreEntitySet="Boxes">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="LotId" ColumnName="LotId" />
@@ -284,10 +291,11 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="ReAgents">
-      <EntityTypeMapping TypeName="IsTypeOf(Model1.ReAgent)">
+      <EntityTypeMapping TypeName="IsTypeOf(MedLab.ReAgent)">
         <MappingFragment StoreEntitySet="ReAgents">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

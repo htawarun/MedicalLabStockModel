@@ -65,6 +65,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MedicalLabStockModel.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="MedicalLabStockModel.Context.Inspections.cs" />
     <Compile Include="MedicalLabStockModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -92,7 +93,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="MedicalLabStockModel.edmx.diagram">
       <DependentUpon>MedicalLabStockModel.edmx</DependentUpon>
     </None>

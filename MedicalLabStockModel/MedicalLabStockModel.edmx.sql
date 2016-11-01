@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/26/2016 09:29:11
+-- Date Created: 10/30/2016 21:17:43
 -- Generated from EDMX file: C:\Projects\FirstRepo\MedicalLabStockSystem\MedicalLabStockModel\MedicalLabStockModel\MedicalLabStockModel.edmx
 -- --------------------------------------------------
 
@@ -19,6 +19,15 @@ GO
 
 IF OBJECT_ID(N'[dbo].[FK_BoxLot]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Boxes] DROP CONSTRAINT [FK_BoxLot];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ReAgentManufacturer]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ReAgents] DROP CONSTRAINT [FK_ReAgentManufacturer];
+GO
+IF OBJECT_ID(N'[dbo].[FK_SupplierLot]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Lots] DROP CONSTRAINT [FK_SupplierLot];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LotReAgent]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Lots] DROP CONSTRAINT [FK_LotReAgent];
 GO
 
 -- --------------------------------------------------
@@ -47,7 +56,8 @@ GO
 
 -- Creating table 'Suppliers'
 CREATE TABLE [dbo].[Suppliers] (
-    [Id] int IDENTITY(1,1) NOT NULL
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -55,13 +65,15 @@ GO
 CREATE TABLE [dbo].[Lots] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [SupplierId] int  NOT NULL,
-    [ReAgentId] int  NOT NULL
+    [ReAgentId] int  NOT NULL,
+    [Expiry] datetime  NOT NULL
 );
 GO
 
 -- Creating table 'Manufacturers'
 CREATE TABLE [dbo].[Manufacturers] (
-    [Id] int IDENTITY(1,1) NOT NULL
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -75,7 +87,8 @@ GO
 -- Creating table 'ReAgents'
 CREATE TABLE [dbo].[ReAgents] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [ManufacturerId] int  NOT NULL
+    [ManufacturerId] int  NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
 );
 GO
 
