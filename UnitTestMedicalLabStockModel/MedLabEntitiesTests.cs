@@ -16,14 +16,32 @@ namespace MedicalLabStockModel.Tests
         {
             using (var context = new MedLabEntities())
             {
+                int SuppliersCount = context.Suppliers.Count();
+                Assert.AreEqual(3, SuppliersCount);
+
+                int BoxesCount = context.Boxes.Count();
+                int ManuCount = context.Manufacturers.Count();
+
+
                 var L2EQuery = from st in context.Suppliers
-                               where st.Name == "Bill"
+                               where st.Name == "Supplier1"
                                select st;
 
-                var student = L2EQuery.FirstOrDefault<Supplier>();
+                var supplier = L2EQuery.FirstOrDefault<Supplier>();
+
+                Assert.AreEqual("Supplier1", supplier.Name);
+
+                var L2EQuery2 = from st in context.Suppliers
+                                where st.Name.StartsWith("Supplier")
+                                select st;
+
+                int count = L2EQuery2.Count();
+                Assert.AreEqual(3, count);
+
             }
 
-            Assert.Fail();
+            //Assert.Fail();
+            
         }
     }
 }

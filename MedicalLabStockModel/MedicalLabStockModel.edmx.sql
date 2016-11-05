@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/30/2016 21:17:43
+-- Date Created: 11/05/2016 15:45:44
 -- Generated from EDMX file: C:\Projects\FirstRepo\MedicalLabStockSystem\MedicalLabStockModel\MedicalLabStockModel\MedicalLabStockModel.edmx
 -- --------------------------------------------------
 
